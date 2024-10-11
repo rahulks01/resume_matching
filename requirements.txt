@@ -1,0 +1,11 @@
+PyMuPDF
+python-docx
+spacy
+pandas
+numpy
+scikit-learn
+fuzzywuzzy
+streamlit
+nltk
+gensim
+tensorflow
