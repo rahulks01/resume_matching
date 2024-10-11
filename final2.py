@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
+import requests
+import io  # Importing the io module for StringIO
 import os
 import fitz  # PyMuPDF for PDF extraction
 import docx  # python-docx for DOCX extraction
 import re
-import requests
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -20,12 +21,13 @@ model = load_model()
 def load_and_cache_job_data():
     csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
     response = requests.get(csv_url)
+    
     if response.status_code != 200:
         st.error(f"Failed to download the dataset. Status code: {response.status_code}")
         return [], [], []
     
-    # Read the content directly from the downloaded file
-    df_jobs = pd.read_csv(pd.compat.StringIO(response.text))
+    # Use io.StringIO to read the content directly from the downloaded file
+    df_jobs = pd.read_csv(io.StringIO(response.text))
     job_descriptions = df_jobs['Description'].fillna('').tolist()
     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
