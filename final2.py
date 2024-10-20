@@ -19,7 +19,7 @@ model = load_model()
 # Precompute and cache job descriptions
 @st.cache_data
 def load_and_cache_job_data():
-    csv_url = 'DataSet-Resume-Based-Internship-Matching.csv'
+    csv = 'DataSet-Resume-Based-Internship-Matching.csv'
     # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
     # response = requests.get(csv_url)
     
@@ -28,7 +28,8 @@ def load_and_cache_job_data():
     #     return [], [], []
     
     # Use io.StringIO to read the content directly from the downloaded file
-    df_jobs = pd.read_csv(io.StringIO(response.text))
+    # df_jobs = pd.read_csv(io.StringIO(response.text))
+    df_jobs = pd.read_csv(csv)
     job_descriptions = df_jobs['Description'].fillna('').tolist()
     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
