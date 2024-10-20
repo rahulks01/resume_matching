@@ -21,11 +21,11 @@ model = load_model()
 def load_and_cache_job_data():
     csv_url = 'DataSet-Resume-Based-Internship-Matching.csv'
     # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
-    response = requests.get(csv_url)
+    # response = requests.get(csv_url)
     
-    if response.status_code != 200:
-        st.error(f"Failed to download the dataset. Status code: {response.status_code}")
-        return [], [], []
+    # if response.status_code != 200:
+    #     st.error(f"Failed to download the dataset. Status code: {response.status_code}")
+    #     return [], [], []
     
     # Use io.StringIO to read the content directly from the downloaded file
     df_jobs = pd.read_csv(io.StringIO(response.text))
