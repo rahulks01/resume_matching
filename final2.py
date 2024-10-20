@@ -19,7 +19,8 @@ model = load_model()
 # Precompute and cache job descriptions
 @st.cache_data
 def load_and_cache_job_data():
-    csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
+    csv_url = 'DataSet-Resume-Based-Internship-Matching.csv'
+    # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
     response = requests.get(csv_url)
     
     if response.status_code != 200:
