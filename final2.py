@@ -38,19 +38,23 @@ model = load_model()
 
 @st.cache_data
 def load_and_cache_job_data():
-    # Google Drive file ID (make sure the file is publicly shared or accessible)
-    file_id = 'h1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE'
+    # Correct Google Drive file ID (ensure the file is publicly shared)
+    file_id = '1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE'  # Correct file ID
+    
+    # Generate the download link in the format gdown expects
     url = f'https://drive.google.com/uc?id={file_id}'
     
     # Download the Excel file from Google Drive
-    output = 'job_data.xlsx'  # Excel file format
-    gdown.download(url, output, quiet=False)
+    output = 'job_data.xlsx'  # Define the output file name
+    gdown.download(url, output, quiet=False)  # Download the file
     
     # Load the Excel file into a pandas DataFrame
-    df_jobs = pd.read_excel(output)  # Read Excel instead of CSV
+    df_jobs = pd.read_excel(output)
+    
     job_descriptions = df_jobs['Description'].fillna('').tolist()
     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
+    
     return job_descriptions, job_titles, job_vectors
 
 job_descriptions, job_titles, job_vectors = load_and_cache_job_data()
