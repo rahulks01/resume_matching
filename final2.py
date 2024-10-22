@@ -18,44 +18,44 @@ def load_model():
 model = load_model()
 
 # Precompute and cache job descriptions
-# @st.cache_data
-# def load_and_cache_job_data():
-#     csv = 'DataSet-Resume-Based-Internship-Matching.csv'
-#     # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
-#     # response = requests.get(csv_url)
-    
-#     # if response.status_code != 200:
-#     #     st.error(f"Failed to download the dataset. Status code: {response.status_code}")
-#     #     return [], [], []
-    
-#     # Use io.StringIO to read the content directly from the downloaded file
-#     # df_jobs = pd.read_csv(io.StringIO(response.text))
-#     df_jobs = pd.read_csv(csv)
-#     job_descriptions = df_jobs['Description'].fillna('').tolist()
-#     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
-#     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
-#     return job_descriptions, job_titles, job_vectors
-
 @st.cache_data
 def load_and_cache_job_data():
-    # Correct Google Drive file ID (ensure the file is publicly shared)
-    file_id = '1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE'  # Correct file ID
+    csv = 'DataSet-Resume-Based-Internship-Matching.csv'
+    # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
+    # response = requests.get(csv_url)
     
-    # Generate the download link in the format gdown expects
-    url = f'https://drive.google.com/uc?id={file_id}'
+    # if response.status_code != 200:
+    #     st.error(f"Failed to download the dataset. Status code: {response.status_code}")
+    #     return [], [], []
     
-    # Download the Excel file from Google Drive
-    output = 'job_data.xlsx'  # Define the output file name
-    gdown.download(url, output, quiet=False)  # Download the file
-    
-    # Load the Excel file into a pandas DataFrame
-    df_jobs = pd.read_excel(output)
-    
+    # Use io.StringIO to read the content directly from the downloaded file
+    # df_jobs = pd.read_csv(io.StringIO(response.text))
+    df_jobs = pd.read_csv(csv)
     job_descriptions = df_jobs['Description'].fillna('').tolist()
     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
-    
     return job_descriptions, job_titles, job_vectors
+
+# @st.cache_data
+# def load_and_cache_job_data():
+#     # Correct Google Drive file ID (ensure the file is publicly shared)
+#     file_id = '1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE'  # Correct file ID
+    
+#     # Generate the download link in the format gdown expects
+#     url = f'https://drive.google.com/uc?id={file_id}'
+    
+#     # Download the Excel file from Google Drive
+#     output = 'job_data.xlsx'  # Define the output file name
+#     gdown.download(url, output, quiet=False)  # Download the file
+    
+#     # Load the Excel file into a pandas DataFrame
+#     df_jobs = pd.read_excel(output)
+    
+#     job_descriptions = df_jobs['Description'].fillna('').tolist()
+#     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
+#     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
+    
+#     return job_descriptions, job_titles, job_vectors
 
 job_descriptions, job_titles, job_vectors = load_and_cache_job_data()
 
