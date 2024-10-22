@@ -11,3 +11,4 @@ gensim
 tensorflow
 sentence-transformers
 tf-keras
+gdown
