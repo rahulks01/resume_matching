@@ -8,6 +8,7 @@ import docx  # python-docx for DOCX extraction
 import re
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+import gdown
 
 # Load the model once and cache it
 @st.cache_resource
@@ -17,19 +18,36 @@ def load_model():
 model = load_model()
 
 # Precompute and cache job descriptions
+# @st.cache_data
+# def load_and_cache_job_data():
+#     csv = 'DataSet-Resume-Based-Internship-Matching.csv'
+#     # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
+#     # response = requests.get(csv_url)
+    
+#     # if response.status_code != 200:
+#     #     st.error(f"Failed to download the dataset. Status code: {response.status_code}")
+#     #     return [], [], []
+    
+#     # Use io.StringIO to read the content directly from the downloaded file
+#     # df_jobs = pd.read_csv(io.StringIO(response.text))
+#     df_jobs = pd.read_csv(csv)
+#     job_descriptions = df_jobs['Description'].fillna('').tolist()
+#     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
+#     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
+#     return job_descriptions, job_titles, job_vectors
+
 @st.cache_data
 def load_and_cache_job_data():
-    csv = 'DataSet-Resume-Based-Internship-Matching.csv'
-    # csv_url = 'https://resumedataset.s3.eu-north-1.amazonaws.com/DataSet-Resume-Based-Internship-Matching.csv'
-    # response = requests.get(csv_url)
+    # Google Drive file ID (make sure the file is publicly shared or accessible)
+    file_id = 'h1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE/edit?usp=sharing'
+    url = f'https://drive.google.com/uc?id={file_id}'
     
-    # if response.status_code != 200:
-    #     st.error(f"Failed to download the dataset. Status code: {response.status_code}")
-    #     return [], [], []
+    # Download the Excel file from Google Drive
+    output = 'job_data.xlsx'  # Excel file format
+    gdown.download(url, output, quiet=False)
     
-    # Use io.StringIO to read the content directly from the downloaded file
-    # df_jobs = pd.read_csv(io.StringIO(response.text))
-    df_jobs = pd.read_csv(csv)
+    # Load the Excel file into a pandas DataFrame
+    df_jobs = pd.read_excel(output)  # Read Excel instead of CSV
     job_descriptions = df_jobs['Description'].fillna('').tolist()
     job_titles = df_jobs['Title'].fillna('Unknown').tolist()
     job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
