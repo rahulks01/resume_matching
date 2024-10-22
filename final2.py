@@ -39,7 +39,7 @@ model = load_model()
 @st.cache_data
 def load_and_cache_job_data():
     # Google Drive file ID (make sure the file is publicly shared or accessible)
-    file_id = 'h1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE/edit?usp=sharing'
+    file_id = 'h1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE'
     url = f'https://drive.google.com/uc?id={file_id}'
     
     # Download the Excel file from Google Drive
