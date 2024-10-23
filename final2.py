@@ -56,8 +56,7 @@ def load_and_cache_job_data():
 
 @st.cache_data
 def load_and_cache_job_data():
-    file_id = 'your_google_drive_file_id'
-    url = f'https://drive.google.com/uc?id={file_id}'
+    url = 'https://docs.google.com/spreadsheets/d/1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE/edit?usp=sharing'
     
     try:
         output = 'dataset.csv'
