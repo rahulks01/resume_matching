@@ -19,20 +19,20 @@ model = load_model()
 
 # Precompute and cache job descriptions
 # 
-@st.cache_data
-@st.cache_data
-def load_and_cache_job_data():
-    csv_url = 'https://raw.githubusercontent.com/prabhuanantht/HackML-Part1/main/DataSet-Resume-Based-Internship-Matching.csv'
+
+# @st.cache_data
+# def load_and_cache_job_data():
+#     csv_url = 'https://raw.githubusercontent.com/prabhuanantht/HackML-Part1/main/DataSet-Resume-Based-Internship-Matching.csv'
     
-    try:
-        df_jobs = pd.read_csv(csv_url)
-        job_descriptions = df_jobs['Description'].fillna('').tolist()
-        job_titles = df_jobs['Title'].fillna('Unknown').tolist()
-        job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
-        return job_descriptions, job_titles, job_vectors
-    except Exception as e:
-        st.error(f"Error loading dataset: {e}")
-        return [], [], []
+#     try:
+#         df_jobs = pd.read_csv(csv_url)
+#         job_descriptions = df_jobs['Description'].fillna('').tolist()
+#         job_titles = df_jobs['Title'].fillna('Unknown').tolist()
+#         job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
+#         return job_descriptions, job_titles, job_vectors
+#     except Exception as e:
+#         st.error(f"Error loading dataset: {e}")
+#         return [], [], []
 
 
 
