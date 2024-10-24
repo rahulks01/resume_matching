@@ -55,19 +55,25 @@ model = load_model()
 
 @st.cache_data
 def load_and_cache_job_data():
-    url = 'https://drive.google.com/file/d/1w6BDl80dBlRt9LuycrucswrBfD7xfM_R/view?usp=sharing'
+    url = 'https://drive.google.com/uc?id=1w6BDl80dBlRt9LuycrucswrBfD7xfM_R'
     
     try:
         output = 'dataset.csv'
         gdown.download(url, output, quiet=False)
         df_jobs = pd.read_csv(output)
+        
         job_descriptions = df_jobs['Description'].fillna('').tolist()
         job_titles = df_jobs['Title'].fillna('Unknown').tolist()
         job_vectors = model.encode(job_descriptions, batch_size=32, show_progress_bar=True)
+        
         return job_descriptions, job_titles, job_vectors
     except Exception as e:
         st.error(f"Error loading dataset: {e}")
         return [], [], []
+
+# Load data
+job_descriptions, job_titles, job_vectors = load_and_cache_job_data()
+
 
 job_descriptions, job_titles, job_vectors = load_and_cache_job_data()
 
