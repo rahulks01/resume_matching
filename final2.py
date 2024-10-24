@@ -9,7 +9,6 @@ import re
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import gdown
-import pytorch
 # Load the model once and cache it
 @st.cache_resource
 def load_model():
