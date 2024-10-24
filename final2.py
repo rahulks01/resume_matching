@@ -56,7 +56,7 @@ model = load_model()
 
 @st.cache_data
 def load_and_cache_job_data():
-    url = 'https://docs.google.com/spreadsheets/d/1jYf5F8d4Wx4NOrKsQzPEg3MZDSXy25l82cUwXzS4XgE/edit?usp=sharing'
+    url = 'https://drive.google.com/file/d/1w6BDl80dBlRt9LuycrucswrBfD7xfM_R/view?usp=sharing'
     
     try:
         output = 'dataset.csv'
