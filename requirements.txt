@@ -12,3 +12,4 @@ tensorflow
 sentence-transformers
 tf-keras
 gdown
+pytorch
